@@ -9,7 +9,7 @@ services:
       - /var/www/html/vendor/
     depends_on:
       - database
-    command: php -S lumen:8000 -t public
+    command: php -S web:8000 -t public
     restart: always
     networks:
       - web
