@@ -8,19 +8,24 @@ services:
       - .:/var/www/html
       - /var/www/html/vendor/
     depends_on:
-      - database
-    command: php -S web:8000 -t public
+      - db
+    command: 
+      - /bin/sh
+      - '-c'
+      - "php -S web:8000 -t public"
     restart: always
+    env_file:
+      - ./.env
     networks:
       - web
 
-  database:
+  db:
     image: mysql:5.6
     environment:
       MYSQL_RANDOM_ROOT_PASSWORD: "yes"
-      MYSQL_USER: dbuser
-      MYSQL_PASSWORD: dbpassword
-      MYSQL_DATABASE: dbproject
+      MYSQL_USER: demo
+      MYSQL_PASSWORD: demo
+      MYSQL_DATABASE: demo
     networks:
       - web
       - phpmyadmin
@@ -28,14 +33,14 @@ services:
   phpmyadmin:
     image: phpmyadmin:5.1-apache
     depends_on: 
-      - database
+      - db
     ports:
       - "8888:80"
     environment:
       - PMA_ARBITRARY=1
-      - PMA_HOST=database
-      - PMA_USER=dbuser
-      - PMA_PASSWORD=dbpassword
+      - PMA_HOST=db
+      - PMA_USER=demo
+      - PMA_PASSWORD=demo
     networks:
       - phpmyadmin
 
