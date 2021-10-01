@@ -1,0 +1,49 @@
+version: "3"
+services:
+  web:
+    build: .
+    ports:
+      - "8080:8000"
+    volumes:
+      - .:/var/www/html
+      - /var/www/html/vendor/
+    depends_on:
+      - db
+    command: 
+      - /bin/sh
+      - '-c'
+      - "php -S web:8000 -t public"
+    restart: always
+    env_file:
+      - ./.env
+    networks:
+      - web
+
+  db:
+    image: mysql:5.6
+    environment:
+      MYSQL_RANDOM_ROOT_PASSWORD: "yes"
+      MYSQL_USER: ${DB_USERNAME}
+      MYSQL_PASSWORD: ${DB_PASSWORD}
+      MYSQL_DATABASE: ${DB_DATABASE}
+    networks:
+      - web
+      - phpmyadmin
+
+  phpmyadmin:
+    image: phpmyadmin:5.1-apache
+    depends_on: 
+      - db
+    ports:
+      - "8888:80"
+    environment:
+      - PMA_ARBITRARY=1
+      - PMA_HOST=${DB_HOST}
+      - PMA_USER=${DB_USERNAME}
+      - PMA_PASSWORD=${DB_PASSWORD}
+    networks:
+      - phpmyadmin
+
+networks:
+  web:
+  phpmyadmin:
