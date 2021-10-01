@@ -1,4 +1,4 @@
-# TP Git 
+# Projet Versionning Collab
 
 ## Installation
 

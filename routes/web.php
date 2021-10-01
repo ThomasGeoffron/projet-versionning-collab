@@ -12,3 +12,5 @@
 */
 
 $app->get('/', ListingController::class);
+
+$app->get('/current-time', TimestampController::class);
