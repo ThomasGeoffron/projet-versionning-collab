@@ -9,8 +9,7 @@ phpunit tests:
   script:
   - curl -sS https://getcomposer.org/installer | php
   - php composer.phar install --prefer-dist --no-ansi --no-interaction --no-progress --no-scripts
-  - cp .env.example .env
-  - php artisan key:generate
+  # - php artisan key:generate
   - vendor/bin/phpunit tests
   allow_failure: true
 
