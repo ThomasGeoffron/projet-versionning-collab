@@ -1,4 +1,4 @@
-# Feature PR/MR Template
+# Feature MR Template
 
 ## Title
 ([Ticket#](feat):[your ticket] add claim damage and new claim pages)
