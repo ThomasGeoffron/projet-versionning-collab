@@ -4,15 +4,6 @@ before_script:
   - apt-get update -qq
   - apt-get install -y -qq git
 
-services:
-  - mysql:5.6
-  variables:
-      MYSQL_HOST: $DB_HOST
-      MYSQL_DATABASE: $DB_DATABASE
-      MYSQL_RANDOM_ROOT_PASSWORD: 'yes'
-      MYSQL_USER: $DB_USER
-      MYSQL_PASSWORD: $DB_PASSWORD
-
 phpunit tests:
   stage: test
   script:
@@ -22,6 +13,14 @@ phpunit tests:
   # - php artisan key:generate
   - vendor/bin/phpunit tests
   allow_failure: true
+  services:
+  - mysql:5.6
+  variables:
+      MYSQL_HOST: $DB_HOST
+      MYSQL_DATABASE: $DB_DATABASE
+      MYSQL_RANDOM_ROOT_PASSWORD: 'yes'
+      MYSQL_USER: $DB_USER
+      MYSQL_PASSWORD: $DB_PASSWORD
 
 deploy to heroku:
   stage: deploy
